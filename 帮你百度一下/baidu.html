@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head><title>帮别人百度一下</title></head>
+<meta name="viewport" content="width=1080,inital-scale=1.0,user-scalable=no;">
+<link rel="stylesheet" type="text/css" href="md-input-mobile.css">
+<link rel="shortcut icon" href="https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/wiseindex/img/favicon64.ico" type="image/x-icon" />
+<style>
+body{
+font-family:roboto;
+}
+.logo{
+width:40vw;
+margin:3vh;
+margin-top:10vh;
+}
+.md_text_1{
+width:70vw;
+max-width:50vh;
+margin:0 auto;
+margin-bottom:5vh;
+}
+.md_image_button_1{
+margin:0 auto;
+}
+.md_image_button_2{
+background:#2196f3;
+width:70%;
+height:70%;
+padding:15%;
+box-shadow:2px 2px 10px rgba(0,0,0,0.5);
+}
+#log{
+width:86vw;
+margin:5vw;
+padding:2vw;
+box-shadow:2px 2px 15px rgba(0,0,0,0.5);
+border-radius:10px;
+font-size:30pt;
+text-align:left;
+}
+.copyarea{
+width:calc(86vw - 120px);
+height:70px;
+font-size:40px;
+background:rgba(0,0,0,0);
+border:0;
+border-bottom:solid 2px rgba(0,0,0,0.5);
+outline:none;
+}
+.copyarea:focus{
+border-bottom:solid 2px #f44336;
+}
+.btns{
+height:72px;
+width:72px;
+margin-left:20px;
+background:#E91E63;
+box-shadow:1px 1px 5px rgba(0,0,0,0.5);
+float:right;
+border-radius:36px;
+border:0;
+}
+.icons{
+width:80%;
+}
+</style>
+<body align=center>
+<img class="logo" src="https://m.baidu.com/se/static/img/iphone/logo.png">
+<div data-md-color="#2196f3" class="md_text_1"><input onfocus="md_text_focus(this.parentNode)" onblur="md_text_blur(this.parentNode)" class="md_text_3 input" type="text"><span class="md_text_2">你要帮别人百度的内容</span></div>
+<div data-md-color="#2196f3" class="md_image_button_1"><img onclick="md_image_button_change(this.parentNode);getUrl();" class="md_image_button_2" src="https://img.icons8.com/material/96/ffffff/right.png"><div class="md_image_button_3 md_ripple"></div></div>
+<div id="log">
+</div>
+</body>
+<script src="https://781064707.rthe.cn/clipboard.min.js"></script>
+<script src="md-input-mobile.js"></script>
+<script>
+function log(msg){
+document.querySelector("#log").innerHTML+="•"+msg+"<br>";
+}
+log("在输入框内输入你想要帮别人百度的内容");
+log("然后回车或点击箭头按钮");
+var i=0;
+function getUrl(){
+document.querySelector(".input").blur();
+var url=document.querySelector(".input").value;
+if(url.length==0){log("您什么也没输入");br();}
+url="https://caojiale.rthe.cn/baidu?kw="+url;
+url=encodeURI(url);
+log("链接生成完毕");
+log("<input id='out"+i+"' class='copyarea' type='text' value='"+url+"'><button class='btns btn"+i+"' data-clipboard-action='copy' data-clipboard-target='#out"+i+"'><img class='icons' src='https://img.icons8.com/ios-glyphs/92/ffffff/clipboard.png'></button>");
+new ClipboardJS('.btn'+i);
+i++;
+log("<span style='color:#f44336'>请点击输入框右侧按钮复制</span>");
+log("<span style='color:#f44336'>若复制失败</span>");
+log("<span style='color:#f44336'>请手动复制输入框内容</span>");
+log("----------分隔线----------");
+}
+document.querySelector(".input").onkeypress=function (){
+if(event.keyCode==13){getUrl();
+}}
+
+function br(){break;}
+</script>
+</html>
