@@ -1,0 +1,13 @@
+.md_ripple{position:relative;width:200%;height:200%;left:-50%;top:-50%;background:#000000;opacity:0;border-radius:100%;transition:background 0.2s,opacity 0.2s;}
+.md_text_1{height:80px;padding:10px;border-bottom:4px solid rgba(0,0,0,0.54);transition:border 0.5s;overflow:hidden;text-align:left;}
+.md_text_2{position:relative;top:-50px;color:rgba(0,0,0,0.54);font-size:50px;line-height:80px;transition:font 0.5s,line 0.5s,color 0.5s;}
+.md_text_3{position:relative;top:30px;opacity:0;outline:none;border:0;height:50px;width:100%;z-index:1;font-size:45px;color:rgba(0,0,0,0.87);background:rgba(0,0,0,0);transition:display 0.3s;padding:0;}
+.md_radio_1{width:55px;height:55px;}
+.md_radio_2{width:50%;height:50%;margin:0px;padding:calc(25% - 5px);border:5px rgba(0,0,0,0.54) solid;position:relative;left:0;top:-59px;border-radius:55px;transition:border 0.2s,padding 0.2s,margin 0.2s;}
+.md_radio_3{width:100%;height:100%;position:relative;z-index:1;opacity:0;margin:0;padding:0;}
+.md_radio_4{width:100%;height:100%;position:relative;opacity:0;border-radius:50%;background:rgba(0,0,0,0.54);transition:background 0.2s,opacity 0.2s;}
+.md_radio_5{top:calc(-250% - 5px);}
+.md_button{position:relative;left:0;top:-72px;background:rgba(0,0,0,0);color:inherit;line-height:72px;border:0;outline:none;font-size:32px;width:100%;height:100%;}
+.md_button_bg{width:124px;height:72px;margin:32px;margin-left:64px;margin-right:64px;padding:0;padding-left:32px;padding-right:32px;box-shadow:0 4px 6px 1px rgba(0,0,0,.37);border-radius:4px;overflow:hidden;}
+.md_button_ripple{position:relative;left:50%;top:50%;border-radius:100px;width:0;height:0;background:rgba(0,0,0,0.14);transition:top 0.2s,left 0.2s,width 0.2s,height 0.2s;}
+.md_button_rippleBox{width:100%;height:100%;}

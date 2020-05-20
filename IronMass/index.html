@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080,inital-scale=1.0,user-scalable=no">
+<html>
+<link rel="stylesheet" type="text/css" href="style/md-input-mobile.css">
+<head><title></title></head>
+<style>
+body{
+background:url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1589793843249&di=c1427448098c2dde17f9c98162304166&imgtype=0&src=http%3A%2F%2Fimg010.hc360.cn%2Fm7%2FM06%2F95%2F22%2FwKhQo1c-2hCEKwznAAAAAAqNw3A686.jpg") no-repeat top center/100% auto;
+}
+table{
+width:80%;
+margin:0 auto;
+}
+.radioBtn{
+float:left;
+transform:scale(0.8);
+}
+.radioText span{
+font-size:30px;
+line-height:55px;
+}
+td{
+text-align:center;
+}
+#shape td{
+border-right:2px solid #aaa;
+padding-left:2vw;
+height:80px;
+}
+#shape td:last-child{
+border:0;
+}
+#card{
+width:80vw;
+height:80vh;
+background:rgba(255,255,255,0.92);
+border-radius:2vw;
+position:absolute;
+top:6vh;
+left:10vw;
+padding-top:2vh;
+padding-bottom:2vh;
+overflow-x:hidden;
+overflow-y:auto;
+}
+#input{
+width:57vw;
+margin-top:3vh;
+margin-bottom:3vh;
+}
+#tips{
+color: #f44336;
+line-height:55px;
+font-size:30px;
+}
+#output{
+line-height:55px;
+font-size:30px;
+}
+#cal{
+margin:0 auto;
+margin-top:32px;
+margin-bottom:32px;
+}
+</style>
+<body>
+<div id="card">
+<!--形状选项-->
+<table id="shape" border=0>
+<tr>
+<td><label class="radioText"><div data-md-color="#2196f3" class="md_radio_1 radioBtn"><input name="shape" data-shape-id="0" onclick="md_radio_check()" class="md_radio_3" type="radio"><div class="md_radio_2"><div class="md_radio_4"></div></div><div class="md_ripple md_radio_5"></div></div>&nbsp;<span>测试形状1</span></label></td>
+</tr>
+</table>
+<!--输入数据-->
+<table id="input" border=0>
+<tr><td><div data-md-color="#2196f3" class="md_text_1"><input id="density" onfocus="md_text_focus(this.parentNode)" onblur="md_text_blur(this.parentNode)" class="md_text_3" type="number" value="7.8"><span class="md_text_2">密度|(x10^3千克/立方米)</span></div></td></tr>
+<tr><td><div data-md-color="#2196f3" class="md_text_1"><input data-shape-input="a" onfocus="md_text_focus(this.parentNode)" onblur="md_text_blur(this.parentNode)" class="md_text_3 data_input" type="number"><span class="md_text_2">*度&nbsp;|&nbsp;米</span></div></td></tr>
+<tr><td id="tips">提示:<br>提示测试，长度测试测试测试测试测试！！</td></tr>
+</table>
+<div id="cal" data-md-bgColor="#2196f3" data-md-fontColor="#ffffff" class="md_button_bg" onclick="md_button_change(this.querySelector('.md_button_ripple').style)"><div class="md_button_rippleBox"><div class="md_button_ripple"></div></div><input class="md_button" type="button" value="计算"></div>
+<hr>
+<!--输出数据-->
+<table id="output" border=0>
+<tr>
+<th>体积/m<sup>3</sup></th><td>00.00</td><th>质量/吨</th><td>00.00</td>
+</tr>
+</table>
+</div>
+</body>
+<script src="js/custom.js"></script>
+<script src="js/data.js"></script>
+<script src="js/md-input-mobile.js"></script>
+<script>
+var shapeID,volume;
+
+$("#cal").on("click",function (){
+	if(shapeID!=undefined){
+		for(var i=0;i<$(".data_input").length;i++)
+			eval("window."+$('.data_input')[i].getAttribute('data-shape-input')+"=parseInt($('.data_input')[i].value)");
+		for(var i=0;i<JSONobj.shape[shapeID].output.length;i++)
+			eval(JSONobj.shape[shapeID].output[i]);
+		if(isNaN(volume))
+			volume=0;
+			output();
+}});
+
+function ellipsis(num,digit){
+	num*=Math.pow(10,digit);
+	num=parseInt(num);
+	num/=Math.pow(10,digit);
+	return num;
+}
+function output(){
+	$("#output td",0).innerText=ellipsis(volume,6);
+	if($("#density").value)
+		$("#output td",1).innerText=ellipsis(volume*$("#density").value,6);
+}
+function Build(){
+	while(document.querySelector(".data_input"))
+		$("#input tbody").removeChild($(".data_input",0).parentNode.parentNode.parentNode);
+	if(document.querySelector("#tips"))
+		$("#input tbody").removeChild($("#tips").parentNode);
+	for(var i=0;i<JSONobj.shape[shapeID].input.key1.length;i++)
+		$("#input tbody").innerHTML+="<tr><td><div data-md-color='#2196f3' class='md_text_1'>\
+			<input data-shape-input='"+JSONobj.shape[shapeID].input.key1[i]+"' onfocus='md_text_focus(this.parentNode)' onblur='md_text_blur(this.parentNode)' class='md_text_3 data_input' type='number'>\
+			<span class='md_text_2'>"+JSONobj.shape[shapeID].input.key2[i]+"</span></div></td></tr>";
+	if(JSONobj.shape[shapeID].tip)
+		$("#input tbody").innerHTML+="<tr><td id='tips'>提示:<br>"+JSONobj.shape[shapeID].tip+"</td></tr>";
+}
+(function (){
+	var HTMLstr="<tr>";
+	for(var i=0;i<JSONobj.shape.length;i++){
+		if(!(i%3))$("#shape").innerHTML+="</tr><tr>";
+		HTMLstr+="<td><label class='radioText'>\
+			<div data-md-color='#2196f3' class='md_radio_1 radioBtn'>\
+			<input name='shape' data-shape-id='"+i+"' onclick='md_radio_check()' class='md_radio_3' type='radio'>\
+			<div class='md_radio_2'><div class='md_radio_4'></div></div><div class='md_ripple md_radio_5'></div></div>&nbsp;<span>\
+			"+JSONobj.shape[i].name+"</span></label></td>";
+	}
+	HTMLstr+="</tr>";
+	$("#shape").innerHTML=HTMLstr;
+	$("input[name='shape']").on("click",function (){
+		shapeID=parseInt(this.getAttribute("data-shape-id"));
+		Build();
+	});
+	$("input[name='shape']",0).click();
+})();
+</script>
+</html>
